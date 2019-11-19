@@ -1,0 +1,66 @@
+﻿@model SignInViewModel
+@{
+    ViewData["Title"] = "SignInView";
+}
+<div class="container mt-5">
+    <div class="col text-center mb-3">
+        <img src="~/images/logo.png" alt="ASP.NET" class="img-responsive" width="150" height="150" />
+    </div>
+
+    <div class="col text-center mb-5">
+        <h2>Sign in</h2>
+    </div>
+
+    <form method="post" asp-controller="Account" asp-action="SignInView">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="form-group">
+            @if (Model.Error != null)
+            {
+                <input asp-for="UserID" type="text" class="form-control is-invalid" id="userIDtextField" aria-describedby="userHelp" placeholder="User ID" value="@Model.UserID" />
+                <span asp-validation-for="UserID"></span>
+
+            }
+            else
+            {
+                <input asp-for="UserID" type="text" class="form-control" id="userIDtextField" aria-describedby="userHelp" placeholder="User ID" value="@Model.UserID" />
+                <span asp-validation-for="UserID"></span>
+                <small id="userHelp" class="form-text text-muted">Enter your student ID or professor ID</small>
+            }
+
+        </div>
+        <div class="form-group">
+            @if (Model.Error != null)
+            {
+                <input asp-for="Password" type="password" class="form-control is-invalid" id="userPasswordTextField" placeholder="Password" value="@Model.Password" />
+                <span asp-validation-for="Password"></span>
+
+                <div class="invalid-feedback">
+                    Either user ID or password is invalid
+                </div>
+
+            }
+            else
+            {
+                <input asp-for="Password" type="password" class="form-control" id="userPasswordTextField" placeholder="Password" value="@Model.Password" />
+                <span asp-validation-for="Password"></span>
+            }
+
+        </div>
+
+        <div class="form-group mb-1">
+            <div class="col text-center">
+                <button class="btn btn-primary btn-block mb-2" type="submit">Sign In</button>
+            </div>
+        </div>
+
+        <div class="col text-center  mb-5">
+            <div class="form-inline justify-content-center">
+                <small id="signupHelp" class="form-text text-muted mr-1">Have an account yet? </small>
+                <small id="signupLink" class="form-text"><a asp-area="" asp-controller="Home" asp-action="Index">Sign Up Here</a></small>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+
