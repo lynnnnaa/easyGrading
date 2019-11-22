@@ -1,10 +1,16 @@
 ﻿using easyGrading.Models;
+using easyGrading.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace easyGrading.Controllers
 {
     public class AccountController : Controller
     {
+        private IAccountServices _accountServices;
+
+        public AccountController(IAccountServices accountServices) {
+            _accountServices = accountServices;
+        }
         [HttpGet]
         public IActionResult SignInView(string returnUrl = "")
         {
@@ -17,7 +23,8 @@ namespace easyGrading.Controllers
             //Check if all needed fields are filled
             if (ModelState.IsValid && model.UserID != null && model.Password != null)
             {
-                var result = checkUser(model.UserID, model.Password);
+                //var result = checkUser(model.UserID, model.Password);
+                var result = _accountServices.isUser(model.UserID, model.Password);
 
                 if (result)
                 {
@@ -35,10 +42,6 @@ namespace easyGrading.Controllers
             return View();
         }
 
-        private bool checkUser(string userID, string password)
-        {
-            return (userID == "admin" && password == "admin");
-        }
 
     }
 }
