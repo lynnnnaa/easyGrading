@@ -18,16 +18,25 @@ namespace easyGrading.Services
 
         public IEnumerable<Student> returnStudentInfoWithUserID(string userID) {
 
-            var query = 
+            int result = 0;
+            
+            if (Int32.TryParse(userID, out result))
+            {
+                var query =
                 $@"SELECT *
                     FROM dbo.student st
-                    WHERE st.Id = {Int32.Parse(userID)}";
+                    WHERE st.Id = {result}";
 
-            var student = _dbContext.Students
-                .FromSqlRaw(query)
-                .ToList();
+                var student = _dbContext.Students
+                    .FromSqlRaw(query)
+                    .ToList();
 
-            return student;
+                return student;
+            }
+            else {
+                return new List<Student>();
+            }
+            
         }
     }
 }
