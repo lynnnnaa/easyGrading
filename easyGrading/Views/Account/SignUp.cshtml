@@ -1,0 +1,56 @@
+﻿@model StudentViewModel
+@{ 
+    List<SelectListItem> li = new List<SelectListItem>();
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissable">
+        <strong>@TempData["SuccessMessage"]</strong>
+        @Html.ActionLink("View Account", "MainScreenView", "MainScreen", null, null)
+    </div>
+}
+
+<div class="container mt-5">
+
+    <div class="col text-center mb-5">
+        <h2>Sign Up</h2>
+    </div>
+
+    <form method="post" asp-controller="Account" asp-action="SignUp">
+
+        <div class="form-group">
+            <input asp-for="Id" class="form-control" type="number" placeholder="User ID ex:000000000" />
+            <strong>@TempData["Message"]</strong>
+        </div>
+
+        <div class="form-group">
+            <input asp-for="Password" class="form-control" type="password" placeholder="Password" />
+            <strong>@TempData["Message2"]</strong>
+        </div>
+
+        <div class="form-group">
+            <input asp-for="FirstName" class="form-control" type="text" placeholder="FirstName" />
+        </div>
+
+        <div class="form-group">
+            <input asp-for="LastName" class="form-control" type="text" placeholder="LastName" />
+        </div>
+
+        <div class="form-group">
+            
+            @Html.DropDownListFor(model => model.Major, ViewBag.DepartmentList as SelectList, "--select--", new { @class="form-control"})
+
+        </div>
+
+        <div class="form-group">
+            @Html.DropDownListFor(model => model.Minor, ViewBag.DepartmentList as SelectList, "--select--", new { @class = "form-control" })
+        </div>
+
+        <div class="form-group mb-1">
+            <div class="col text-center">
+                <button class="btn btn-primary btn-block mb-2" type="submit">Sign Up</button>
+            </div>
+        </div>
+    </form>
+
+</div>

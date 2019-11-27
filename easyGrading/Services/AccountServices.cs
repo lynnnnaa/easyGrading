@@ -1,4 +1,5 @@
-﻿using easyGrading.Services.Interface;
+﻿using easyGrading.Models;
+using easyGrading.Services.Interface;
 using easyGrading.Services.Model;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace easyGrading.Services
         private IDbQueries _dbQueries;
         public AccountServices(IDbQueries dbQueries) {
             _dbQueries = dbQueries;
+            
         }
         public bool isUser(string userID, string password) {
 
@@ -22,6 +24,11 @@ namespace easyGrading.Services
             var studentData = query.FirstOrDefault<Student>();
 
             return studentData != null;
+        }
+
+        public IEnumerable<Department> GetDepartments()
+        {
+            return (_dbQueries.returnAllDepartment());
         }
     }
 }
