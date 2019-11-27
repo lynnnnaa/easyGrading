@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace easyGrading.Models
+namespace easyGrading.Services.Model
 {
-    public class Department
+    public class Work_in
     {
-        [Key]
         public int Id { get; set; }
-        public int Admin_Id { get; set; }
-        public string Name { get; set; }
+        public int Dep_Id { get; set; }
+
+        public int Prof_Id { get; set; }
     }
 }

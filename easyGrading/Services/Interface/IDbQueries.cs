@@ -11,7 +11,7 @@ namespace easyGrading.Services.Interface
     {
         public IEnumerable<Student> returnStudentInfoWithUserID(string userID);
         public IEnumerable<Department> returnAllDepartment();
-
+        public bool isProf(int id);
         public void SaveStudent(Student model);
 
     }

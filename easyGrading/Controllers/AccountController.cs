@@ -68,7 +68,8 @@ namespace easyGrading.Controllers
             if (model.Id >0 && model.Password != null)
             {
                 var result = _accountServices.isUser(model.Id.ToString(), model.Password);
-                if (result) 
+                var result2 = _dbQueries.isProf(model.Id);
+                if (result || result2) 
                 {
                     TempData["Message"] = "This User Id is alredy exist";
                 }

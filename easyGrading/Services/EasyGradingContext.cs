@@ -15,5 +15,9 @@ namespace easyGrading.Services
         public DbSet<Student> Student { get; set; }
         public DbSet<Department> Department { get; set; }
         public DbSet<Professor> Professor { get; set; }
+        public DbSet<Admin> Admin { get; set; }
+        public DbSet<Course> Course { get; set; }
+        public DbSet<Work_in> Work_in { get; set; }
+
     }
 }

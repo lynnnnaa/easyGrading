@@ -43,6 +43,19 @@ namespace easyGrading.Services
             return department;
         }
 
+        public bool isProf(int id) 
+        {
+            var query =
+                $@"SELECT *
+                    FROM dbo.professor prof
+                    WHERE prof.Id =id";
+
+            var professor = _dbContext.Professor
+                .FromSqlRaw(query)
+                .ToList();
+            return (professor != null);
+        }
+
         public void SaveStudent(Student model) 
         {
             _dbContext.Add(model);
