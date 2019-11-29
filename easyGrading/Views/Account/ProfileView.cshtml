@@ -1,0 +1,37 @@
+﻿@model ProfileModel
+@{
+    ViewData["Title"] = "ProfileView";
+}
+
+<div class="container">
+        <h3 class="mt-5">Profile</h3>
+
+        <div class="col text-right">
+            <button class="btn btn-primary btn-lg mb-2" type="submit">Edit</button>
+        </div>
+   
+    <h5 class="pb-3">@Model.StudentName</h5>
+    <p>@Model.DepartmentName</p>
+    <p>@Model.Major</p>
+    <p>@Model.Minor</p>
+   
+    <div class="form-group mb-1">
+        <div class="col text-center">
+            <button class="btn btn-primary btn-block mt-300" type="submit">Sign Out</button>
+        </div>
+    </div>
+
+    <nav class="navbar fixed-bottom btn-group" role="group">
+        <button type="button" class="btn btn-primary-outline">
+            <i class="fa fa-2x fa-book"></i>
+            <small class="row text-center justify-content-center"><b>Classes</b></small>
+        </button>
+        <button type="button" class="btn btn-primary-outline">
+            <img src="~/images/logo.png" width="70" height="70" />
+        </button>
+        <button type="button" class="btn btn-primary-outline">
+            <i class="fa fa-2x fa-user"></i>
+            <small class="row text-center justify-content-center"><b>Profile</b></small>
+        </button>
+    </nav>
+</div>
