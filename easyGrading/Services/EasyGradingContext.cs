@@ -1,4 +1,5 @@
-﻿using easyGrading.Services.Model;
+﻿using easyGrading.Models;
+using easyGrading.Services.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,12 @@ namespace easyGrading.Services
     {
         public EasyGradingContext(DbContextOptions<EasyGradingContext> options) : base(options) { }
         
-        public DbSet<Student> Students { get; set; }
+        public DbSet<Student> Student { get; set; }
+        public DbSet<Department> Department { get; set; }
+        public DbSet<Professor> Professor { get; set; }
+        public DbSet<Admin> Admin { get; set; }
+        public DbSet<Course> Course { get; set; }
+        public DbSet<Work_in> Work_in { get; set; }
+
     }
 }
