@@ -36,12 +36,19 @@ body, html {
     max-height: 75vh;
 }
 
-a.navbar-brand {
+.list-group-classes {
+    max-height: 65vh;
+}
+
+a .navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
 }
 
+.mt-300 {
+    margin-top: 300px;
+}
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
