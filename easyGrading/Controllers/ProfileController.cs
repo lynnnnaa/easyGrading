@@ -7,7 +7,6 @@ namespace EasyGrading.Controllers
     {
         public IActionResult ProfileView()
         {
-
             var model = new ProfileModel()
             {
                 DepartmentName = "Bachelor of Science",
