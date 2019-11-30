@@ -21,7 +21,8 @@ namespace easyGrading.Controllers
 
                 if (result)
                 {
-                    return RedirectToAction("MainScreenView", "MainScreen");
+                    //return RedirectToAction("MainScreenView", "MainScreen");
+                    return RedirectToAction("AddNewClassView", "AddNewClass");
                     //return RedirectToAction("temp", model);
                 }
             }

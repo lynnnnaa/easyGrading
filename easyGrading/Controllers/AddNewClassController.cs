@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace EasyGrading.Controllers
 {
-    public class ClassesController : Controller
+    public class AddNewClassController : Controller
     {
-        public IActionResult ClassesView() {
+        public IActionResult AddNewClassView() {
 
             var model = new List<ClassInfoViewModel>(){
                 new ClassInfoViewModel() {
