@@ -19,6 +19,7 @@ namespace easyGrading.Services
         public DbSet<Ta> Ta { get; set; }
         public DbSet<Course> Course { get; set; }
         public DbSet<Work_in> Work_in { get; set; }
+        public DbSet<Takes> Takes { get; set; }
 
     }
 }

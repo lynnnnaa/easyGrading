@@ -105,5 +105,61 @@ namespace easyGrading.Services
             _dbContext.Add(model);
             _dbContext.SaveChanges();
         }
+
+        public Department GetDepartmentInfo(int id)
+        {
+            var query =
+                $@"SELECT *
+                    FROM dbo.department d
+                    WHERE d.Id={id}";
+
+            var department = _dbContext.Department
+                .FromSqlRaw(query)
+                .ToList().FirstOrDefault<Department>();
+
+            return department;
+        }
+
+        public IEnumerable<Takes> GetStudentCourses(int studentId)
+        {
+            var query =
+                    $@"SELECT *
+                    FROM dbo.takes t
+                    WHERE t.Student_Id ={studentId}";
+
+            var studentTakes = _dbContext.Takes
+                .FromSqlRaw(query)
+                .ToList();
+
+            return studentTakes;
+        }
+
+        public Course GetCourseInfo(string courseId)
+        {
+            var query =
+                        $@"SELECT *
+                    FROM dbo.course c
+                    WHERE c.Id = {courseId}";
+
+            var course = _dbContext.Course
+                .FromSqlRaw(query)
+                .ToList().FirstOrDefault<Course>();
+
+            return course;
+        }
+
+        public Professor GetProfessorInfo(int profId)
+        {
+            var query =
+                        $@"SELECT *
+                    FROM dbo.professor p
+                    WHERE p.Id = {profId}";
+
+            var professorInfo = _dbContext.Professor
+                .FromSqlRaw(query)
+                .ToList().FirstOrDefault<Professor>();
+
+            return professorInfo;
+        }
     }
 }

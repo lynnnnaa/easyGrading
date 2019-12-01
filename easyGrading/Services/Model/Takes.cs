@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace easyGrading.Services.Model
 {
-    public class Professor
+    public class Takes
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Password { get; set; }
-        public int? Admin_Id { get; set; }
+        public int Student_Id { get; set; }
+        public string Course_Id { get; set; }
+        public int? Goal { get; set; }
     }
 }

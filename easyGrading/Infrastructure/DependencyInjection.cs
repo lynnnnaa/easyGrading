@@ -13,6 +13,7 @@ namespace easyGrading.Infrastructure
         public static void setup(IServiceCollection services) {
 
             services.AddScoped<IAccountServices, AccountServices>();
+            services.AddScoped<IClassesServices, ClassesServices>();
 
             services.AddTransient<IDbQueries, DbQueries>();
         }

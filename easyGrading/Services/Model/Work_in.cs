@@ -10,8 +10,8 @@ namespace easyGrading.Services.Model
     public class Work_in
     {
         public int Id { get; set; }
-        public int Dep_Id { get; set; }
+        public int? Dep_Id { get; set; }
 
-        public int Prof_Id { get; set; }
+        public int? Prof_Id { get; set; }
     }
 }

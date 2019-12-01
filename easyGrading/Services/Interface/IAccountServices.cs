@@ -13,5 +13,6 @@ namespace easyGrading.Services.Interface
         public bool isUserAdmin(int userID, string password);
         public bool isUserTa(int userID, string password);
         public IEnumerable<Department> GetDepartments();
+        public ProfileModel GetProfile(int userId);
     }
 }

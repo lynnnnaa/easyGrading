@@ -4,34 +4,17 @@
 }
 
 <div class="container">
-    <h5 class="mt-5">Choose a class</h5>
-    <div class="list-group">
-        @foreach (var course in Model)
-        {
-            <a asp-action="" asp-controller="MainScreen">
-                <div class="list-group-item list-group-item-action">
-                    <h5 class="row ml-2 mt-1">
-                        @course.ClassCodeName
-                    </h5>
-                    <small class="row ml-2">@course.ClassName</small>
-                    <small class="row ml-2">Instructor: @course.Instructor</small>
-                    <small class="row ml-2 mb-2">Teaching Assistant: @course.TeachingAssistant</small>
-                </div>
-
-            </a>
-        }
-    </div>
-    <nav class="navbar fixed-bottom btn-group" role="group">
-        <button type="button" class="btn btn-primary-outline">
-            <i class="fa fa-2x fa-book"></i>
-            <small class="row text-center justify-content-center"><b>Classes</b></small>
-        </button>
-        <button type="button" class="btn btn-primary-outline">
-            <img src="~/images/logo.png" width="70" height="70" />
-        </button>
-        <button type="button" class="btn btn-primary-outline">
-            <i class="fa fa-2x fa-user"></i>
-            <small class="row text-center justify-content-center"><b>Profile</b></small>
-        </button>
-    </nav>
+    <form method="get">
+        <h5 class="mt-5">Choose a class</h5>
+        <div class="list-group">
+            @foreach (var course in Model)
+            {
+                @await Html.PartialAsync("_ClassInfo", course);
+            }
+        </div>
+        <nav class="navbar fixed-bottom btn-group" role="group">
+            @await Html.PartialAsync("_FooterNavBar", Model.FirstOrDefault<ClassInfoViewModel>().UserId);
+        </nav>
+    </form>
+    
 </div>
