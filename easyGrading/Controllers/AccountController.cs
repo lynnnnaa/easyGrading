@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using easyGrading.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using System;
 
 namespace easyGrading.Controllers
 {
@@ -30,24 +31,30 @@ namespace easyGrading.Controllers
             //Check if all needed fields are filled
             if (ModelState.IsValid && model.UserID != null && model.Password != null)
             {
-                //var result = checkUser(model.UserID, model.Password);
-                var result = _accountServices.isUser(model.UserID, model.Password);
 
-                if (result)
+                var id = 0;
+
+                if (Int32.TryParse(model.UserID, out id))
                 {
-                    //return RedirectToAction("MainScreenView", "MainScreen");
-                    return RedirectToAction("ClassesView", "Classes");
-                    //return RedirectToAction("temp", model);
+                    if (_accountServices.isUserStudent(id, model.Password))
+                    {
+                        return RedirectToAction("MainScreenView", "MainScreen", model);
+                    }
+                    else if (_accountServices.isUserTa(id, model.Password))
+                    {
+
+                    }
+                    else if (_accountServices.isUserProfessor(id, model.Password))
+                    {
+                    }
+                    else if (_accountServices.isUserAdmin(id, model.Password)) 
+                    {
+                    }
                 }
+                
             }
             model.Error = "accountError";
             return View(model);
-        }
-
-        public IActionResult temp(SignInViewModel user)
-        {
-            var model = user;
-            return View();
         }
 
 
@@ -66,11 +73,13 @@ namespace easyGrading.Controllers
             IEnumerable<Department> list = _dbQueries.returnAllDepartment();
 
             ViewBag.DepartmentList = new SelectList(list, "Id", "Name");
-            if (model.Id >0 && model.Password != null)
+            if (model.Id > 0 && model.Password != null)
             {
-                var result = _accountServices.isUser(model.Id.ToString(), model.Password);
+                var result = _accountServices.isUserStudent(model.Id, model.Password);
                 var result2 = _dbQueries.isProf(model.Id);
-                if (result || result2) 
+                var result3 = _accountServices.isUserAdmin(model.Id, model.Password);
+                var result4 = _accountServices.isUserTa(model.Id, model.Password);
+                if (result || result2 || result3 || result4) 
                 {
                     TempData["Message"] = "This User Id is alredy exist";
                 }

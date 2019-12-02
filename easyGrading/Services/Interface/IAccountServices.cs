@@ -8,7 +8,10 @@ namespace easyGrading.Services.Interface
 {
     public interface IAccountServices
     {
-        public bool isUser(string userID, string password);
+        public bool isUserStudent(int userID, string password);
+        public bool isUserProfessor(int userID, string password);
+        public bool isUserAdmin(int userID, string password);
+        public bool isUserTa(int userID, string password);
         public IEnumerable<Department> GetDepartments();
     }
 }
