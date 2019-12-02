@@ -17,18 +17,62 @@ namespace easyGrading.Services
             _dbContext = dbContext;
         }
 
-        public IEnumerable<Student> returnStudentInfoWithUserID(string userID) {
-
+        public IEnumerable<Student> returnStudentInfoWithUserID(int userID) {
+            
             var query = 
                 $@"SELECT *
                     FROM dbo.student st
-                    WHERE st.Id = {Int32.Parse(userID)}";
+                    WHERE st.Id = {userID}";
 
             var student = _dbContext.Student
                 .FromSqlRaw(query)
                 .ToList();
 
             return student;
+        }
+        public IEnumerable<Professor> returnProfessorInfoWithUserID(int userID)
+        {
+
+            var query =
+                $@"SELECT *
+                    FROM dbo.professor p
+                    WHERE p.Id = {userID}";
+
+            var professor = _dbContext.Professor
+                .FromSqlRaw(query)
+                .ToList();
+
+            return professor;
+        }
+
+        public IEnumerable<Admin> returnAdminInfoWithUserID(int userID)
+        {
+
+            var query =
+                $@"SELECT *
+                    FROM dbo.admin a
+                    WHERE a.Id = {userID}";
+
+            var admin = _dbContext.Admin
+                .FromSqlRaw(query)
+                .ToList();
+
+            return admin;
+        }
+
+        public IEnumerable<Ta> returnTaInfoWithUserID(int userID)
+        {
+
+            var query =
+                $@"SELECT *
+                    FROM dbo.ta t
+                    WHERE t.Id = {userID}";
+
+            var Ta = _dbContext.Ta
+                .FromSqlRaw(query)
+                .ToList();
+
+            return Ta;
         }
         public IEnumerable<Department> returnAllDepartment()
         {
