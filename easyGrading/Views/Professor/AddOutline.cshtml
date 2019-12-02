@@ -1,0 +1,40 @@
+﻿@model Course_Outline_Section
+@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+    <div class="main">
+        <div class="col text-center mb-5">
+            <h2>Add outline</h2>
+        </div>
+
+        <form method="post" asp-controller="Professor" asp-action="AddOutline">
+            <h5 class="row ml-2 mt-1">
+                 @ViewBag.CourseName
+            </h5>
+            <div class="form-group">
+                <input asp-for="Part" class="form-control" type="text" placeholder="section name ex:assignment1"/>
+                <strong>@TempData["Message3"]</strong>
+            </div>
+
+            <div class="form-group">
+                <input asp-for="Percentage" class="form-control" type="number" placeholder="percentage" />
+                <strong>@TempData["Message2"]</strong>
+            </div>
+
+
+            <div class="form-group mb-1">
+                <div class="col text-center">
+                    <button class="btn btn-primary btn-block mb-2" type="submit">Add</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+<style>
+    .main {
+         margin-top: 100px;
+        margin-left: 200px; /* Same as the width of the sidenav */
+        font-size: 20px; /* Increased text to enable scrolling */
+        padding: 0px 10px;
+    }
+</style>

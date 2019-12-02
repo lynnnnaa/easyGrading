@@ -46,13 +46,15 @@ namespace easyGrading.Controllers
                     }
                     else if (_accountServices.isUserProfessor(id, model.Password))
                     {
-                    }
-                    else if (_accountServices.isUserAdmin(id, model.Password)) 
-                    {
+                        return RedirectToAction("ProfPage", "Professor", new { Id = Convert.ToInt32(model.UserID) });
                     }
                 }
-                
-            }
+                    else if (_accountServices.isUserAdmin(id, model.Password)) 
+                    {
+                        return RedirectToAction("AdminPage", "Admin", new { Id = Convert.ToInt32(model.UserID) });
+                    }
+                }
+            
             model.Error = "accountError";
             return View(model);
         }
@@ -63,7 +65,6 @@ namespace easyGrading.Controllers
         {
             IEnumerable < Department > list= _dbQueries.returnAllDepartment();
             
-
             ViewBag.DepartmentList = new SelectList(list, "Id", "Name");
             return View();
         }

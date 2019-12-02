@@ -1,0 +1,45 @@
+﻿@model Work_in
+@{
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<div class="main">
+    <div class="col text-center mb-5">
+        <h2>Assign new field</h2>
+    </div>
+
+    <form method="post" asp-controller="Admin" asp-action="EditWorkIn">
+
+        <h5 class="row ml-2 mt-1">
+            Professor Name: @ViewBag.profName
+        </h5>
+
+        <div class="form-group">
+
+            @Html.DropDownListFor(model => model.Dep_Id, ViewBag.DepartmentList as SelectList, new { @class = "form-control" })
+            <strong>@TempData["Message"]</strong>
+
+        </div>
+
+        <div class="form-group mb-1">
+            <div class="col text-center">
+                <button class="btn btn-primary btn-block mb-2" type="submit" name="button" value="update">Update</button>
+            </div>
+        </div>
+
+        <div class="form-group mb-1">
+            <div class="col text-center">
+                <button class="btn btn-primary btn-block mb-2" type="submit" name="button" value="delete">Delete this work</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<style>
+    .main {
+        margin-top: 100px;
+        margin-left: 200px; /* Same as the width of the sidenav */
+        font-size: 20px; /* Increased text to enable scrolling */
+        padding: 0px 10px;
+    }
+</style>

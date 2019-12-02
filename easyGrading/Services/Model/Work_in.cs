@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace easyGrading.Services.Model
+namespace easyGrading.Models
 {
     public class Work_in
     {

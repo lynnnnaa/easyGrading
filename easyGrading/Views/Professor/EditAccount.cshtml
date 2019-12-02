@@ -1,0 +1,44 @@
+﻿@model Professor
+@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+    <div class="main">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissable">
+                <strong>@TempData["SuccessMessage"]</strong>
+            </div>
+        }
+        <div class="col text-center mb-5">
+            <h2>My Account</h2>
+        </div>
+
+        <form method="post" asp-controller="Professor" asp-action="EditAccount">
+            <h5 class="row ml-2 mt-1">
+                My Id number: @Model.Id
+            </h5>
+            <div class="form-group">
+                <input asp-for="Name" class="form-control" type="text" value=@Model.Name />
+                <strong>@TempData["Message2"]</strong>
+            </div>
+
+            <div class="form-group">
+                <input asp-for="Password" class="form-control" type="password" value=@Model.Password />
+            </div>
+
+            <div class="form-group mb-1">
+                <div class="col text-center">
+                    <button class="btn btn-primary btn-block mb-2" type="submit">Update</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+<style>
+    .main {
+         margin-top: 100px;
+        margin-left: 200px; /* Same as the width of the sidenav */
+        font-size: 20px; /* Increased text to enable scrolling */
+        padding: 0px 10px;
+    }
+</style>
