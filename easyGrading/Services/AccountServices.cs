@@ -68,7 +68,7 @@ namespace easyGrading.Services
         public ProfileModel GetProfile(int userId) {
             var profile = new ProfileModel();
 
-            var student = _dbQueries.returnStudentInfoWithUserID(userId.ToString()).ToList().FirstOrDefault<Student>();
+            var student = _dbQueries.returnStudentInfoWithUserID(userId).ToList().FirstOrDefault<Student>();
 
             if (student.Major.HasValue) {
                 var department = _dbQueries.GetDepartmentInfo(student.Major.Value);
