@@ -1,4 +1,5 @@
 ﻿using easyGrading.Models;
+using easyGrading.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,64 +8,27 @@ namespace EasyGrading.Controllers
 {
     public class MainScreenController : Controller
     {
-        public IActionResult MainScreenView()
+        private IClassesServices _classesServices;
+        public MainScreenController(IClassesServices classesServices) {
+            _classesServices = classesServices;
+        }
+        public IActionResult MainScreenView(SignInViewModel userModel)
         {
-            var model = new List<ClassInfoViewModel>(){
-                new ClassInfoViewModel() {
-                    ClassCodeName = "CPSC 571",
-                    ClassName = "Design and Implementation of Database Systems",
-                    Instructor = "Ken Barker",
-                    TeachingAssistant = "Tamer Jarada"
-                },
-                new ClassInfoViewModel() {
-                    ClassCodeName = "CPSC 575",
-                    ClassName = "iProgramming for Creative Minds",
-                    Instructor = "Alexander Ivanov",
-                    TeachingAssistant = "None"
-                },
-                new ClassInfoViewModel() {
-                    ClassCodeName = "ART 345",
-                    ClassName = "Anatomical Drawing I",
-                    Instructor = "Kim Huynh",
-                    TeachingAssistant = "None"
-                },
-                new ClassInfoViewModel() {
-                    ClassCodeName = "PHIL 305",
-                    ClassName = "The Seventh and Eighteenth Centuries",
-                    Instructor = "J.J. Macintosh",
-                    TeachingAssistant = "None"
-                },
-                new ClassInfoViewModel() {
-                    ClassCodeName = "PHIL 314",
-                    ClassName = "Information Technology Ethics",
-                    Instructor = "Reid Buchanan",
-                    TeachingAssistant = "None"
-                },
-                 new ClassInfoViewModel() {
-                    ClassCodeName = "PHIL 305",
-                    ClassName = "The Seventh and Eighteenth Centuries",
-                    Instructor = "J.J. Macintosh",
-                    TeachingAssistant = "None"
-                },
-                  new ClassInfoViewModel() {
-                    ClassCodeName = "PHIL 305",
-                    ClassName = "The Seventh and Eighteenth Centuries",
-                    Instructor = "J.J. Macintosh",
-                    TeachingAssistant = "None"
-                },
-                   new ClassInfoViewModel() {
-                    ClassCodeName = "PHIL 305",
-                    ClassName = "The Seventh and Eighteenth Centuries",
-                    Instructor = "J.J. Macintosh",
-                    TeachingAssistant = "None"
-                }
-                };
+
+            var model = _classesServices.GetClassInfo(Int32.Parse(userModel.UserID));
+           
             return View(model);
         }
 
-        private object IEnumerable<T>()
+        [HttpGet]
+        [Route("MainScreenViewWithUserId/{userId}")]
+        public IActionResult MainScreenViewWithUserId(int userId)
         {
-            throw new NotImplementedException();
+
+            var model = _classesServices.GetClassInfo(userId);
+
+            return View("MainScreenView", model);
         }
+
     }
 }

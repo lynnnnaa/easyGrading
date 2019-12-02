@@ -64,5 +64,25 @@ namespace easyGrading.Services
         {
             return (_dbQueries.returnAllDepartment());
         }
+
+        public ProfileModel GetProfile(int userId) {
+            var profile = new ProfileModel();
+
+            var student = _dbQueries.returnStudentInfoWithUserID(userId).ToList().FirstOrDefault<Student>();
+
+            if (student.Major.HasValue) {
+                var department = _dbQueries.GetDepartmentInfo(student.Major.Value);
+                profile.UserId = userId;
+                profile.StudentName = student.FirstName + " " + student.LastName;
+                profile.Major = department.Name;
+                profile.DepartmentName = department.Name;
+
+                if (student.Minor.HasValue) {
+                    var minor = _dbQueries.GetDepartmentInfo(student.Minor.Value);
+                    profile.Minor = minor.Name;
+                }
+            }
+            return profile;
+        }
     }
 }

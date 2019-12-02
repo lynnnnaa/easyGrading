@@ -1,4 +1,5 @@
 ﻿using easyGrading.Models;
+using easyGrading.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,15 +8,16 @@ namespace EasyGrading.Controllers
 {
     public class ClassesController : Controller
     {
-        public IActionResult ClassesView() {
+        private IClassesServices _classesServices;
+        public ClassesController(IClassesServices classesServices) {
+            _classesServices = classesServices;
+        }
 
-            var model = new List<ClassInfoViewModel>(){
-                new ClassInfoViewModel() {
-                    ClassCodeName = "CPSC 571",
-                    ClassName = "Design and Implementation of Database Systems",
-                    Instructor = "Ken Barker",
-                    TeachingAssistant = "Tamer Jarada"}
-                };
+        [HttpGet]
+        [Route("ClassesView/{userId}")]
+        public IActionResult ClassesView(int userId) {
+
+            var model = _classesServices.GetClassInfo(userId);
             return View(model);
         }
 

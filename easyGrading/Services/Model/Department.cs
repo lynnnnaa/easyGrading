@@ -10,7 +10,7 @@ namespace easyGrading.Models
     {
         [Key]
         public int Id { get; set; }
-        public int Admin_Id { get; set; }
+        public int? Admin_Id { get; set; }
         public string Name { get; set; }
     }
 }
