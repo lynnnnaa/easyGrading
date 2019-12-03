@@ -408,6 +408,18 @@ namespace easyGrading.Services
                     .ToList();
             }
             catch { }
+
+            var query2 =
+                $@"UPDATE dbo.course
+                    SET Prof_Id2=0
+                    WHERE Prof_Id2 = {id}";
+            try
+            {
+                var course = _dbContext.Course
+                    .FromSqlRaw(query2)
+                    .ToList();
+            }
+            catch { }
         }
 
         public void CourseDelete(Course model)
@@ -628,6 +640,73 @@ namespace easyGrading.Services
                     .ToList();
             }
             catch { }
+        }
+
+        public bool isTa(int id)
+        {
+            var query =
+                $@"SELECT *
+                    FROM dbo.ta t
+                    WHERE t.Id = {id}";
+
+            var ta = _dbContext.Ta
+                .FromSqlRaw(query)
+                .ToList();
+            return (ta.Count() != 0);
+        }
+
+        public IEnumerable<Ta> returnAllTa(int id) 
+        {
+            var query =
+                   $@"SELECT *
+                    FROM dbo.ta ta
+                    WHERE ta.Prof_Id={id} OR ta.Course_Id IS NULL";
+
+            var ta = _dbContext.Ta
+                .FromSqlRaw(query)
+                .ToList();
+
+            return ta;
+        }
+
+        public Ta GetTa(int id)
+        {
+            var query =
+                $@"SELECT *
+                    FROM dbo.ta t
+                    WHERE t.Id = {id}";
+
+            var ta = _dbContext.Ta
+                .FromSqlRaw(query)
+                .ToList();
+
+            return ta[0];
+        }
+
+        public void UpdateTa(int id, string Name, int Prof_Id, string Course_Id)
+        {
+            var query =
+               $@"UPDATE dbo.ta
+                    SET Prof_Id={Prof_Id}, Name='{Name}', Course_Id='{Course_Id}'
+                    WHERE Id={id}";
+            try
+            {
+                var ta = _dbContext.Ta
+                    .FromSqlRaw(query)
+                    .ToList();
+            }
+            catch { }
+        }
+
+        public void DeleteTa(Ta model)
+        {
+            _dbContext.Remove(model);
+            _dbContext.SaveChanges();
+        }
+        public void SaveTa(Ta model)
+        {
+            _dbContext.Add(model);
+            _dbContext.SaveChanges();
         }
 
         #endregion

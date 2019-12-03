@@ -77,5 +77,11 @@ namespace easyGrading.Services.Interface
         public Grade GetGrade(int courseOutlineId);
         public IEnumerable<Grade> GetCourseGrade(string courseId);
         public Course_outline_section GetCourse_Outline(int courseOutlineId);
+        public bool isTa(int id);
+        public void SaveTa(Ta model);
+        public IEnumerable<Ta> returnAllTa(int id);
+        public void DeleteTa(Ta model);
+        public Ta GetTa(int id);
+        public void UpdateTa(int id, string Name, int Prof_Id, string Course_Id);
     }
 }

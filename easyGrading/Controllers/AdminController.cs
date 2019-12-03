@@ -98,7 +98,7 @@ namespace easyGrading.Controllers
                     course.Name = model.Name;
                     course.Dep_Id = model.Dep_Id;
                     course.Prof_Id = model.Prof_Id;
-                    course.Prof_Id2 = model.Prof_Id;
+                    course.Prof_Id2 = model.Prof_Id2;
 
                     _dbQueries.SaveCourse(course);
 
@@ -325,12 +325,14 @@ namespace easyGrading.Controllers
                 {
                     TempData["Message"] = "This Professor Id is alredy exist";
                 }
-                if (!result)
+                if (!result && !result2 && !result)
                 {
                     Professor professor = new Professor();
                     professor.Id = model.Id;
                     professor.Name = model.Name;
-                    professor.Password = model.Password;
+                    if (model.Password == null) { professor.Password = "temp"; }
+                    else { professor.Password = model.Password; }
+                    
                     professor.Admin_Id = ID;
 
                     _dbQueries.SaveProfessor(professor);
@@ -340,7 +342,7 @@ namespace easyGrading.Controllers
                     work.Dep_Id = 0;
                     _dbQueries.SaveWorkin(work);
 
-                    TempData["SuccessMessage"] = "Professor Added Successfully";
+                    return RedirectToAction("SearchProfessor", "Admin");
                 }
             }
             else
@@ -400,6 +402,7 @@ namespace easyGrading.Controllers
             if (button == "delete") 
             {
                 _dbQueries.WorkInDelete2(ProfId, workDep_Id);
+                _dbQueries.ReSignTaProf_Id(ProfId);
                 return RedirectToAction("EditProfessor", "Admin", new { id = ProfId });
             }
             var result = _dbQueries.CheckWorkIn(ProfId, model.Dep_Id);

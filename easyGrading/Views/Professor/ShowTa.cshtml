@@ -1,18 +1,19 @@
-﻿@model IEnumerable<Professor>
+﻿@model IEnumerable<Ta>
 @{
-    Layout = "~/Views/Shared/_Layout1.cshtml";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
 }
     <div class="main">
-        <h2>Professor</h2>
+        <h2>Ta-click to check Ta information</h2>
         <div class="list-group">
-            @foreach (var professor in Model)
+            @foreach (var ta in Model)
             {
-                <a asp-action="EditProfessor" asp-controller="Admin" asp-route-id=@professor.Id >
+                <a asp-action="EditTa" asp-controller="Professor" asp-route-id=@ta.Id >
                     <div class="list-group-item list-group-item-action">
                         <h5 class="row ml-2 mt-1">
-                           @professor.Name
+                            @ta.Name
                         </h5>
-                        <small class="row ml-2">Professor Id: @professor.Id</small>
+                        <small class="row ml-2">Ta Id: @ta.Id</small>
+                        <small class="row ml-2">Current Teaching: @ta.Course_Id</small>
                     </div>
 
                 </a>

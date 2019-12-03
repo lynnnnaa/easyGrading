@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using easyGrading.Models;
 using easyGrading.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace easyGrading.Controllers
 {
@@ -31,6 +32,8 @@ namespace easyGrading.Controllers
         }
 
         #region EditOutline
+
+
         [HttpGet]
         public IActionResult ViewOutline(string id)
         {
@@ -73,7 +76,7 @@ namespace easyGrading.Controllers
             int total = _dbQueries.CheckCourseSectionPercentage(CourseId, SectionId);
             if (total + model.Percentage > 100) 
             {
-                TempData["Message2"] = "invalid percentage; pleace enter numbers less then"+(100-total);
+                TempData["Message2"] = "invalid percentage; enter numbers less then"+(100-total);
             }
             else 
             {
@@ -112,14 +115,14 @@ namespace easyGrading.Controllers
             int total = _dbQueries.CheckCourseSectionPercentage(CourseId);
             if (total + model.Percentage > 100)
             {
-                TempData["Message2"] = "invalid percentage; pleace enter numbers less then" + (100 - total);
+                TempData["Message2"] = "invalid percentage; enter numbers less then" + (100 - total);
             }
             else
             {
                 if (!result)
                 {
                     Course_Outline_Section outline = new Course_Outline_Section();
-                    outline.Prof_Id = ID;
+                    outline.Prof_Id = 0;
                     outline.Course_Id = CourseId;
                     outline.Part = model.Part;
                     outline.Percentage = model.Percentage;
@@ -148,6 +151,103 @@ namespace easyGrading.Controllers
             return View(model);
         }
 
+        #endregion
+
+
+        #region AddTa
+        [HttpGet]
+        public IActionResult AddTa()
+        {
+            IEnumerable<Course> list = _dbQueries.returnAllProfessorCourse(ID);
+            ViewBag.CourseList = new SelectList(list, "Id", "Name");
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddTa(Ta model)
+        {
+            if(model.Id > 0 && model.Name !=null)
+            {
+                var result = _dbQueries.isProf(model.Id);
+                var result2 = _dbQueries.isStudent(model.Id);
+                var result3 = _dbQueries.isTa(model.Id);
+                if (result || result2 || result3)
+                {
+                    TempData["Message"] = "This Id is alredy exist";
+                }
+                else
+                {
+                    Ta ta = new Ta();
+                    ta.Id = model.Id;
+                    ta.Name = model.Name;
+                    if (model.Password == null) { ta.Password = "temp"; }
+                    else { ta.Password = model.Password; }
+
+                    ta.Prof_Id = ID;
+                    ta.Course_Id = model.Course_Id;
+                    _dbQueries.SaveTa(ta);
+                    return RedirectToAction("ShowTa", "Professor");
+                }
+            }
+            else
+            {
+                if (model.Id <= 0)
+                {
+                    TempData["Message"] = "Id field cannot be empty";
+                }
+                if (model.Name == null)
+                {
+                    TempData["Message2"] = "Name field cannot be empty";
+                }
+            }
+            IEnumerable<Course> list = _dbQueries.returnAllProfessorCourse(ID);
+            ViewBag.CourseList = new SelectList(list, "Id", "Name");
+            return View(model);
+        }
+
+        #endregion
+
+        #region EditTa
+        [HttpGet]
+        public IActionResult ShowTa()
+        {
+            IEnumerable<Ta> list = _dbQueries.returnAllTa(ID);
+            return View(list);
+        }
+
+        [HttpGet]
+        public IActionResult EditTa(int id)
+        {
+            Ta model = _dbQueries.GetTa(id);
+            IEnumerable<Course> list = _dbQueries.returnAllProfessorCourse(ID);
+            ViewBag.CourseList = new SelectList(list, "Id", "Name", model.Course_Id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult EditTa(Ta model, string button)
+        {
+            if (button == "update") {
+                if (model.Name != null)
+                {
+                    _dbQueries.UpdateTa(model.Id, model.Name, ID, model.Course_Id);
+                    return RedirectToAction("ShowTa", "Professor");
+
+                }
+                else
+                {
+                    TempData["Message2"] = "Name field cannot be empty";
+                }
+            }
+            else
+            {
+                _dbQueries.DeleteTa(model);
+                return RedirectToAction("ShowTa", "Professor");
+            }
+            
+            IEnumerable<Course> list = _dbQueries.returnAllProfessorCourse(ID);
+            ViewBag.CourseList = new SelectList(list, "Id", "Name");
+            return View(model);
+        }
         #endregion
     }
 }
