@@ -12,11 +12,11 @@ namespace EasyGrading.Controllers
         public MainScreenController(IClassesServices classesServices) {
             _classesServices = classesServices;
         }
-        public IActionResult MainScreenView(SignInViewModel userModel)
+        public IActionResult MainScreenView(string userId)
         {
+            var model = _classesServices.GetClassInfo(Int32.Parse(userId));
 
-            var model = _classesServices.GetClassInfo(Int32.Parse(userModel.UserID));
-           
+            TempData["UID"] = Int32.Parse(userId);
             return View(model);
         }
 
