@@ -29,11 +29,9 @@ namespace easyGrading.Services
                     var professorInfo = _dbQueries.GetProfessorInfo(courseInfo.Prof_Id.Value);
 
                     if (courseInfo.Name != null && professorInfo.Name != null) {
-                        var courseName = courseInfo.Name.Split(";");
-
                         studentClass.UserId = studentId;
-                        studentClass.ClassCodeName = courseName[0];
-                        studentClass.ClassName = courseName[1];
+                        studentClass.ClassCodeName = courseInfo.Id;
+                        studentClass.ClassName = courseInfo.Name;
                         studentClass.Instructor = professorInfo.Name;
 
                     }

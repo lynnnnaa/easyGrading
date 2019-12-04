@@ -139,7 +139,7 @@ namespace easyGrading.Services
             var query =
                         $@"SELECT *
                     FROM dbo.course c
-                    WHERE c.Id = {courseId}";
+                    WHERE c.Id = '{courseId}'";
 
             var course = _dbContext.Course
                 .FromSqlRaw(query)

@@ -13,7 +13,7 @@
             }
         </div>
         <nav class="navbar fixed-bottom btn-group" role="group">
-            @await Html.PartialAsync("_FooterNavBar", Model.FirstOrDefault<ClassInfoViewModel>().UserId);
+            @await Html.PartialAsync("_FooterNavBar", TempData.Peek("UID"));
         </nav>
     </form>
     

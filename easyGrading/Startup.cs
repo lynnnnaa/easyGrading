@@ -28,6 +28,15 @@ namespace easyGrading
         {
             services.AddControllersWithViews();
 
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+
+            });
+
             //Add database
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<EasyGradingContext>(option => option.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
@@ -53,13 +62,14 @@ namespace easyGrading
 
             app.UseRouting();
 
+            app.UseSession();
             app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Account}/{action=SignInView}/{id?}");
+                    pattern: "{controller=Account}/{action=SignInView}");
             });
         }
     }

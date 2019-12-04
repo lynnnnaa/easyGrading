@@ -38,7 +38,7 @@ namespace easyGrading.Controllers
                 {
                     if (_accountServices.isUserStudent(id, model.Password))
                     {
-                        return RedirectToAction("MainScreenView", "MainScreen", model);
+                        return RedirectToAction("MainScreenView", "MainScreen",new {userId = model.UserID} );
                     }
                     else if (_accountServices.isUserTa(id, model.Password))
                     {
