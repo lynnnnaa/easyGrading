@@ -1,13 +1,11 @@
 ﻿@model ClassInfoViewModel
 
-<a asp-action="" asp-controller="MainScreen">
-    <div class="list-group-item list-group-item-action mt-1">
-        <h5 class="row ml-2 mt-1">
-            @Model.ClassCodeName
-        </h5>
-        <small class="row ml-2">@Model.ClassName</small>
-        <small class="row ml-2">Instructor: @Model.Instructor</small>
-        <small class="row ml-2 mb-2">Teaching Assistant: @Model.TeachingAssistant</small>
-    </div>
 
-</a>
+<div class="list-group-item mt-1">
+    <h5 class="row ml-2 mt-1">
+        @Model.ClassCodeName
+    </h5>
+    <small class="row ml-2">@Model.ClassName</small>
+    <small class="row ml-2">Instructor: @Model.Instructor</small>
+    <small class="row ml-2 mb-2">Teaching Assistant: @Model.TeachingAssistant</small>
+</div>

@@ -114,8 +114,88 @@ namespace easyGrading.Services
             }
             catch (Exception e) 
             {
+                Console.WriteLine(e);
                 return false;
             }
+        }
+
+        public IEnumerable<CourseComponentModel> GetCourseComponentModels(string courseId) 
+        {
+            var components = new List<CourseComponentModel>();
+
+            try
+            {
+                var courseParts = _dbQueries.GetCourse_Outline_Sections(courseId);
+                foreach (var part in courseParts) 
+                {
+                    var component = new CourseComponentModel();
+
+                    component.Name = part.part;
+
+                    //get Grade status
+                    var grade = _dbQueries.GetGrade(part.Id);
+
+                    if (grade != null)
+                    {
+                        component.Status = grade.Editable ? "need" : "marked";
+                        component.Marks = grade.Actual_Grade.HasValue ? grade.Actual_Grade.Value.ToString() : "";
+                    }
+                    else 
+                    {
+                        component.Status = "need";
+                        component.Marks = "";
+                    }
+
+                    components.Add(component);
+                }
+                return components;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return components;
+            }
+        }
+
+        public int GetCurrentGrade(string courseId) 
+        {
+            try
+            {
+                var courseGrade = _dbQueries.GetCourseGrade(courseId);
+                if (courseGrade != null) 
+                {
+                    double result = 0;
+                    double totalPercentage = 0;
+
+                    foreach (var grade in courseGrade) 
+                    {
+                        var courseOutlineId = grade.Course_Outline_Id;
+                        var courseOutline = _dbQueries.GetCourse_Outline(courseOutlineId);
+
+                        if (courseOutline != null)
+                        {
+                            var percentage = (double)courseOutline.percentage / 100.0;
+                            var actualGrade = (double)grade.Actual_Grade.Value;
+
+                            var temp = (actualGrade * (percentage));
+                            result += temp;
+                            totalPercentage += courseOutline.percentage;
+                        }
+                    }
+
+                    var finalResult = (int)((result / totalPercentage) * 100);
+                    return finalResult;
+                    
+                }
+
+                return 100;
+            }
+            catch (Exception e) 
+            {
+                Console.WriteLine(e);
+                return -1;
+            }
+            
         }
     }
 }

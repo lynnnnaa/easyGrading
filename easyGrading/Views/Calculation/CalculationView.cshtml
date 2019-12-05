@@ -1,37 +1,47 @@
-﻿@model IEnumerable<ClassInfoViewModel>
+﻿@model CalculationModel
 @{
-    ViewData["Title"] = "MainScreenView";
+    ViewData["Title"] = "CalculationView";
 }
 
 <div class="container">
-    <h5 class="mt-5">Choose a class</h5>
-    <div class="list-group">
-        @foreach (var course in Model)
-        {
-            <a asp-action="" asp-controller="MainScreen">
-                <div class="list-group-item list-group-item-action">
-                    <h5 class="row ml-2 mt-1">
-                        @course.ClassCodeName
-                    </h5>
-                    <small class="row ml-2">@course.ClassName</small>
-                    <small class="row ml-2">Instructor: @course.Instructor</small>
-                    <small class="row ml-2 mb-2">Teaching Assistant: @course.TeachingAssistant</small>
-                </div>
+    <form>
+        <div class="col text-left mt-3">
+            <i class="fa fa-chevron-left"></i>
+            <button class="btn btn-primary-outline btn-lg mb-2" formmethod="get" asp-action="MainScreenViewWithUserId" asp-controller="MainScreen" asp-route-userId="@TempData.Peek("UID")">Back</button>
+        </div>
 
-            </a>
-        }
-    </div>
-    <nav class="navbar fixed-bottom btn-group" role="group">
-        <button type="button" class="btn btn-primary-outline">
-            <i class="fa fa-2x fa-book"></i>
-            <small class="row text-center justify-content-center"><b>Classes</b></small>
-        </button>
-        <button type="button" class="btn btn-primary-outline">
-            <img src="~/images/logo.png" width="70" height="70" />
-        </button>
-        <button type="button" class="btn btn-primary-outline">
-            <i class="fa fa-2x fa-user"></i>
-            <small class="row text-center justify-content-center"><b>Profile</b></small>
-        </button>
-    </nav>
+        <div class="col text-center mt-2">
+            <h5>@Model.CourseName</h5>
+        </div>
+
+        <div class="container text-center">
+            <div class="row row-cols-4 text-center">
+                <div class="col-6 text-info h4">Current Grade</div>
+                <div class="col-6 text-info h4">Target Grade</div>
+                <div class="col-6 display-4 mb-3">@Model.CurrentGrade</div>
+                <div class="col-6 display-4 mb-3">
+                    <input class="form-control" id="targetGrade" type="number" value="100" />
+                </div>
+                @foreach (var part in Model.Components)
+                {
+                    <div class="col-6 my-2">@part.Name</div>
+                    @if (part.Status == "marked")
+                    {
+                        <div class="col-6 my-2 bg-success">@part.Status<br>@part.Marks</div>
+                    }
+                    else
+                    {
+                        <div class="col-6 my-2 ">@part.Status<br>@part.Marks</div>
+                    }
+
+                }
+
+            </div>
+        </div>
+
+        <nav class="navbar fixed-bottom btn-group" role="group">
+            @await Html.PartialAsync("_FooterNavBar", TempData.Peek("UID"));
+        </nav>
+    </form>
+    
 </div>
