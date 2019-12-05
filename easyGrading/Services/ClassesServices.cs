@@ -64,6 +64,7 @@ namespace easyGrading.Services
 
 
                     var professorInfo = _dbQueries.GetProfessorInfo(course.Prof_Id.Value);
+                    var taInfo = _dbQueries.GetTaInCourse(course.Id);
 
                     if (course.Name != null && professorInfo.Name != null)
                     {
@@ -71,6 +72,7 @@ namespace easyGrading.Services
                         studentClass.ClassCodeName = course.Id;
                         studentClass.ClassName = course.Name;
                         studentClass.Instructor = professorInfo.Name;
+                        studentClass.TeachingAssistant = taInfo == null ? "" : taInfo.Name;
 
                     }
 
@@ -104,7 +106,7 @@ namespace easyGrading.Services
 
                 var studentData = query.FirstOrDefault<Takes>();
 
-                if (studentTakes == null) {
+                if (studentData == null) {
                     _dbQueries.AddedClassToStudent(studentTakes);
                 }
 

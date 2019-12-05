@@ -177,5 +177,19 @@ namespace easyGrading.Services
             _dbContext.Add(model);
             _dbContext.SaveChanges();
         }
+
+        public Ta GetTaInCourse(string courseId) 
+        {
+            var query =
+                    $@"SELECT *
+                FROM dbo.ta t
+                WHERE t.Course_Id='{courseId}'";
+
+            var taInfo = _dbContext.Ta
+                .FromSqlRaw(query)
+                .ToList().FirstOrDefault<Ta>();
+
+            return taInfo;
+        }
     }
 }

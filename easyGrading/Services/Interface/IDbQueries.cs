@@ -22,6 +22,7 @@ namespace easyGrading.Services.Interface
         public Professor GetProfessorInfo(int profId);
         public IEnumerable<Course> GetAllCourses();
         public void AddedClassToStudent(Takes model);
+        public Ta GetTaInCourse(string courseId);
 
     }
 }
