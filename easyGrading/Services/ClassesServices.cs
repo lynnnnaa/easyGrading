@@ -138,12 +138,12 @@ namespace easyGrading.Services
                     if (grade != null)
                     {
                         component.Status = grade.Editable ? "need" : "marked";
-                        component.Marks = grade.Actual_Grade.HasValue ? grade.Actual_Grade.Value.ToString() : "";
+                        component.Marks = grade.Actual_Grade.HasValue ? grade.Actual_Grade.Value.ToString() : "100%";
                     }
                     else 
                     {
                         component.Status = "need";
-                        component.Marks = "";
+                        component.Marks = "100%";
                     }
 
                     components.Add(component);
@@ -175,7 +175,7 @@ namespace easyGrading.Services
                         if (courseOutline != null)
                         {
                             var percentage = (double)courseOutline.Percentage / 100.0;
-                            var actualGrade = (double)grade.Actual_Grade.Value;
+                            var actualGrade = grade.Actual_Grade.HasValue ? (double)grade.Actual_Grade.Value : 100.0;
 
                             var temp = (actualGrade * (percentage));
                             result += temp;
@@ -196,6 +196,23 @@ namespace easyGrading.Services
                 return -1;
             }
             
+        }
+        public void AddCourseGradeInCourseOutline(string courseId) 
+        {
+            try
+            {
+                var courseOutline = _dbQueries.returnAllCourseOutline(courseId);
+
+                foreach (var outline in courseOutline)
+                {
+                    _dbQueries.AddGrade(outline.Id, courseId);
+                }
+            }
+            catch (Exception e) 
+            {
+            
+            }
+           
         }
     }
 }

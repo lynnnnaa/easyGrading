@@ -13,5 +13,6 @@ namespace easyGrading.Services.Interface
         public bool AddClassToStudent(string courseId, int studentId);
         public IEnumerable<CourseComponentModel> GetCourseComponentModels(string courseId);
         public int GetCurrentGrade(string courseId);
+        public void AddCourseGradeInCourseOutline(string courseId);
     }
 }

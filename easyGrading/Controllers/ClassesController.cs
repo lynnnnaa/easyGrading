@@ -31,7 +31,7 @@ namespace EasyGrading.Controllers
 
         public IActionResult AddClassToUser(string course) {
             var check = _classesServices.AddClassToStudent(course,(int)TempData.Peek("UID"));
-            
+            _classesServices.AddCourseGradeInCourseOutline(course);
             return RedirectToAction("ClassesView");
         }
 
