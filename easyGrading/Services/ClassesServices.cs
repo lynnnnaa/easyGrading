@@ -95,7 +95,18 @@ namespace easyGrading.Services
                 studentTakes.Student_Id = studentId;
                 studentTakes.Course_Id = courseId;
 
-                _dbQueries.AddedClassToStudent(studentTakes);
+                var studentCourses = _dbQueries.GetStudentCourses(studentId);
+
+
+                var query = from student in _dbQueries.GetStudentCourses(studentId)
+                            where student.Course_Id == courseId
+                            select student;
+
+                var studentData = query.FirstOrDefault<Takes>();
+
+                if (studentTakes == null) {
+                    _dbQueries.AddedClassToStudent(studentTakes);
+                }
 
                 return true;
             }
