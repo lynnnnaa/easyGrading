@@ -11,5 +11,7 @@ namespace easyGrading.Services.Interface
         public IEnumerable<ClassInfoViewModel> GetClassInfo(int studentId);
         public IEnumerable<ClassInfoViewModel> GetAllClasses();
         public bool AddClassToStudent(string courseId, int studentId);
+        public IEnumerable<CourseComponentModel> GetCourseComponentModels(string courseId);
+        public int GetCurrentGrade(string courseId);
     }
 }

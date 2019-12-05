@@ -10,8 +10,7 @@ namespace easyGrading.Models
         public string CourseName { get; set; }
         public string CurrentGrade { get; set; }
         public string TargetGrade { get; set; }
-        public string Components { get; set; }
-        public string Marks { get; set; }
-        public string Status { get; set; }
+        public List<CourseComponentModel> Components { get; set; }
+
     }
 }

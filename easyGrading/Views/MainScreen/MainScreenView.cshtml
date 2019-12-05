@@ -9,7 +9,16 @@
         <div class="list-group">
             @foreach (var course in Model)
             {
-                @await Html.PartialAsync("_ClassInfo", course);
+                <button class="addClassBtn btn btn-light btn-transparent" type="submit" asp-action="CalculationView" asp-controller="Calculation" asp-route-courseId="@course.ClassCodeName">
+                    <div class="list-group-item list-group-item-action mt-1">
+                        <h5 class="row ml-2 mt-1">
+                            @course.ClassCodeName
+                        </h5>
+                        <small class="row ml-2">@course.ClassName</small>
+                        <small class="row ml-2">Instructor: @course.Instructor</small>
+                        <small class="row ml-2 mb-2">Teaching Assistant: @course.TeachingAssistant</small>
+                    </div>
+                </button>     
             }
         </div>
         <nav class="navbar fixed-bottom btn-group" role="group">

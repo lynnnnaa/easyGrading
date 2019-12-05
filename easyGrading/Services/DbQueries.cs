@@ -191,5 +191,61 @@ namespace easyGrading.Services
 
             return taInfo;
         }
+
+        public IEnumerable<Course_outline_section> GetCourse_Outline_Sections(string courseId)      
+        {
+            var query =
+                    $@"SELECT *
+                FROM dbo.course_outline_section c
+                WHERE c.Course_Id='{courseId}'";
+
+            var components = _dbContext.Course_Outline_Section
+                .FromSqlRaw(query)
+                .ToList();
+
+            return components;
+        }
+
+        public Grade GetGrade(int courseOutlineId)
+        {
+            var query =
+                        $@"SELECT *
+                FROM dbo.grade g
+                WHERE g.Course_Outline_Id={courseOutlineId}";
+
+            var grade = _dbContext.Grade
+                .FromSqlRaw(query)
+                .ToList().FirstOrDefault<Grade>();
+
+            return grade;
+        }
+
+        public IEnumerable<Grade> GetCourseGrade(string courseId) 
+        {
+            var query =
+                           $@"SELECT *
+                FROM dbo.grade g
+                WHERE g.Course_Id='{courseId}'";
+
+            var grade = _dbContext.Grade
+                .FromSqlRaw(query)
+                .ToList();
+
+            return grade;
+        }
+
+        public Course_outline_section GetCourse_Outline(int courseOutlineId) 
+        {
+            var query =
+                       $@"SELECT *
+                FROM dbo.course_outline_section c
+                WHERE c.Id={courseOutlineId}";
+
+            var components = _dbContext.Course_Outline_Section
+                .FromSqlRaw(query)
+                .ToList().FirstOrDefault<Course_outline_section>();
+
+            return components;
+        }
     }
 }
