@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Course_Outline_Section>
+@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+    <div class="main">
+        <h2>@ViewBag.CourseName</h2>
+        <br/>
+        <form method="post" asp-controller="Professor" asp-action="AddOutline">
+            <div class="list-group">
+                @foreach (var outline in Model)
+                {
+                    <a asp-action="EditOutline" asp-controller="Professor" asp-route-id=@outline.Id>
+                        <div class="list-group-item list-group-item-action">
+
+                            <small class="row ml-2"> @outline.Part  ---------------->   @outline.Percentage  %</small>
+                        </div>
+
+                    </a>
+                }
+            </div>
+            <br/>
+            <div class="form-group mb-1">
+                <div class="col text-center">
+                    <button class="btn btn-primary btn-block mb-2" type="submit">Add</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+<style>
+    .main {
+         margin-top: 100px;
+        margin-left: 200px; /* Same as the width of the sidenav */
+        font-size: 20px; /* Increased text to enable scrolling */
+        padding: 0px 10px;
+    }
+</style>

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Professor>
+@{
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+    <div class="main">
+        <h2>Professor</h2>
+        <div class="list-group">
+            @foreach (var professor in Model)
+            {
+                <a asp-action="EditProfessor" asp-controller="Admin" asp-route-id=@professor.Id >
+                    <div class="list-group-item list-group-item-action">
+                        <h5 class="row ml-2 mt-1">
+                           @professor.Name
+                        </h5>
+                        <small class="row ml-2">Professor Id: @professor.Id</small>
+                    </div>
+
+                </a>
+            }
+        </div>
+    </div>
+
+<style>
+    .main {
+         margin-top: 100px;
+        margin-left: 200px; /* Same as the width of the sidenav */
+        font-size: 20px; /* Increased text to enable scrolling */
+        padding: 0px 10px;
+    }
+</style>

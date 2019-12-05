@@ -130,7 +130,7 @@ namespace easyGrading.Services
                 {
                     var component = new CourseComponentModel();
 
-                    component.Name = part.part;
+                    component.Name = part.Part;
 
                     //get Grade status
                     var grade = _dbQueries.GetGrade(part.Id);
@@ -174,12 +174,12 @@ namespace easyGrading.Services
 
                         if (courseOutline != null)
                         {
-                            var percentage = (double)courseOutline.percentage / 100.0;
+                            var percentage = (double)courseOutline.Percentage / 100.0;
                             var actualGrade = (double)grade.Actual_Grade.Value;
 
                             var temp = (actualGrade * (percentage));
                             result += temp;
-                            totalPercentage += courseOutline.percentage;
+                            totalPercentage += courseOutline.Percentage;
                         }
                     }
 

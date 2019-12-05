@@ -1,0 +1,48 @@
+﻿@model Department
+@{
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+    <div class="main">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissable">
+                <strong>@TempData["SuccessMessage"]</strong>
+            </div>
+        }
+        <div class="col text-center mb-5">
+            <h2>Edit Department</h2>
+        </div>
+
+        <form method="post" asp-controller="Admin" asp-action="EditDepartment">
+            <h5 class="row ml-2 mt-1">
+                Department Id: @Model.Id
+            </h5>
+            <div class="form-group">
+                <input asp-for="Name" class="form-control" type="text" value=@Model.Name />
+                <strong>@TempData["Message2"]</strong>
+            </div>
+
+
+            <div class="form-group mb-1">
+                <div class="col text-center">
+                    <button class="btn btn-primary btn-block mb-2" type="submit" name="button" value="update">Update</button>
+                </div>
+            </div>
+
+            <div class="form-group mb-1">
+                <div class="col text-center">
+                    <button class="btn btn-primary btn-block mb-2" type="submit" name="button" value="delete">delete</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+<style>
+    .main {
+         margin-top: 100px;
+        margin-left: 200px; /* Same as the width of the sidenav */
+        font-size: 20px; /* Increased text to enable scrolling */
+        padding: 0px 10px;
+    }
+</style>

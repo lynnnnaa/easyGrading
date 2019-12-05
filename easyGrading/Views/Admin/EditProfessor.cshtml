@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Work_in>
+@{
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+    <div class="main">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissable">
+                <strong>@TempData["SuccessMessage"]</strong>
+            </div>
+        }
+        <div class="col text-center mb-5">
+            <h2>Edit Professor</h2>
+        </div>
+
+        <form method="post" asp-controller="Admin" asp-action="EditProfessor">
+            <h5 class="row ml-2 mt-1">
+                Professor: @ViewBag.ProfName
+            </h5>
+
+            <h5 class="row ml-2 mt-1">
+                Professor Id: @ViewBag.ProfId
+            </h5>
+
+            <div class="list-group">
+                @foreach (var work_In in Model)
+                {
+
+                    <a asp-action="EditWorkIn" asp-controller="Admin" asp-route-id=@work_In.Dep_Id>
+                        <div class="list-group-item list-group-item-action">
+                            <small class="row ml-2">Work In Department Id : @work_In.Dep_Id</small>
+                        </div>
+
+                    </a>
+
+                }
+            </div>
+
+            <br/> 
+
+            <div class="form-group mb-1">
+                <div class="col text-center">
+                    <button class="btn btn-primary btn-block mb-2" type="submit" name="button" value="add">Add</button>
+                </div>
+            </div>
+
+            <div class="form-group mb-1">
+                <div class="col text-center">
+                    <button class="btn btn-primary btn-block mb-2" type="submit" name="button" value="delete">Delete Professor Info</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+<style>
+    .main {
+         margin-top: 100px;
+        margin-left: 200px; /* Same as the width of the sidenav */
+        font-size: 20px; /* Increased text to enable scrolling */
+        padding: 0px 10px;
+    }
+</style>

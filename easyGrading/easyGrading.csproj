@@ -23,5 +23,9 @@
 
   <ItemGroup>
     <Folder Include="Views\Classes\" />
+	
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Professor\" />
   </ItemGroup>
 </Project>
