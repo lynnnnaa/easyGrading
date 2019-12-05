@@ -9,5 +9,7 @@ namespace easyGrading.Services.Interface
     public interface IClassesServices
     {
         public IEnumerable<ClassInfoViewModel> GetClassInfo(int studentId);
+        public IEnumerable<ClassInfoViewModel> GetAllClasses();
+        public bool AddClassToStudent(string courseId, int studentId);
     }
 }

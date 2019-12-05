@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ClassInfoViewModel>
+@{
+    ViewData["Title"] = "AddNewClassView";
+}
+
+<div class="container">
+    <form>
+        <div class="col text-left mt-3">
+            <i class="fa fa-chevron-left"></i>
+            <button class="btn btn-primary-outline btn-lg mb-2" type="submit" formmethod="get" asp-controller="Classes" asp-action="ClassesView">Back</button>
+        </div>
+
+        <input class="form-control" id="myInput" type="text" placeholder="Search..">
+        <p>Pick any class to add:</p>
+
+        <table class="table table-bordered table-striped table-hover table-light">
+            <thead>
+                <tr>
+                    <th>Tag</th>
+                    <th>Name</th>
+                    <th>Instructor</th>
+                    <th>Teaching Assistant</th>
+                </tr>
+            </thead>
+            <tbody id="myTable">
+                @foreach (var course in Model)
+                {
+                    <tr class="table-row" onclick="location.href = '@(Url.Action("AddClassToUser","Classes",new { course = course.ClassCodeName}))'">
+                        <td>@course.ClassCodeName</td>
+                        <td>@course.ClassName</td>
+                        <td>@course.Instructor</td>
+                        <td>@course.TeachingAssistant</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+
+
+    <nav class="navbar fixed-bottom btn-group" role="group">
+        <button type="button" class="btn btn-primary-outline">
+            <i class="fa fa-2x fa-book"></i>
+            <small class="row text-center justify-content-center"><b>Classes</b></small>
+        </button>
+        <button type="button" class="btn btn-primary-outline">
+            <img src="~/images/logo.png" width="70" height="70" />
+        </button>
+        <button type="button" class="btn btn-primary-outline">
+            <i class="fa fa-2x fa-user"></i>
+            <small class="row text-center justify-content-center"><b>Profile</b></small>
+        </button>
+    </nav>
+</div>
+
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>

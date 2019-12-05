@@ -1,5 +1,6 @@
 ﻿using easyGrading.Models;
 using easyGrading.Services.Interface;
+using easyGrading.Services.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,8 @@ namespace easyGrading.Services
             _dbQueries = dbQueries;
         }
 
-        public IEnumerable<ClassInfoViewModel> GetClassInfo(int studentId) {
+        public IEnumerable<ClassInfoViewModel> GetClassInfo(int studentId) 
+        {
             var classes = new List<ClassInfoViewModel>();
             try
             {
@@ -47,6 +49,71 @@ namespace easyGrading.Services
                 return classes;
             }
             
+        }
+
+        public IEnumerable<ClassInfoViewModel> GetAllClasses() 
+        {
+            var classes= new List<ClassInfoViewModel>();
+
+            try
+            {
+                var courses = _dbQueries.GetAllCourses();
+                foreach (var course in courses) 
+                {
+                    var studentClass = new ClassInfoViewModel();
+
+
+                    var professorInfo = _dbQueries.GetProfessorInfo(course.Prof_Id.Value);
+
+                    if (course.Name != null && professorInfo.Name != null)
+                    {
+                        studentClass.UserId = -1;
+                        studentClass.ClassCodeName = course.Id;
+                        studentClass.ClassName = course.Name;
+                        studentClass.Instructor = professorInfo.Name;
+
+                    }
+
+                    classes.Add(studentClass);
+                }
+                return classes;
+            }
+            catch (Exception e) 
+            {
+                Console.WriteLine(e);
+                return classes;
+            }
+
+        }
+
+        public bool AddClassToStudent(string courseId, int studentId) 
+        {
+            var studentTakes = new Takes();
+
+            try
+            {
+                studentTakes.Student_Id = studentId;
+                studentTakes.Course_Id = courseId;
+
+                var studentCourses = _dbQueries.GetStudentCourses(studentId);
+
+
+                var query = from student in _dbQueries.GetStudentCourses(studentId)
+                            where student.Course_Id == courseId
+                            select student;
+
+                var studentData = query.FirstOrDefault<Takes>();
+
+                if (studentTakes == null) {
+                    _dbQueries.AddedClassToStudent(studentTakes);
+                }
+
+                return true;
+            }
+            catch (Exception e) 
+            {
+                return false;
+            }
         }
     }
 }
