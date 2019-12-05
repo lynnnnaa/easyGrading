@@ -6,6 +6,17 @@ body, html {
     position: relative;
 }
 
+.table-row {
+    cursor: pointer;
+}
+
+
+.btn-transparent 
+{
+    background:none;
+    border-color:transparent;
+}
+
 .bg {
     background-image: url("../images/background.jpg");
     height: 100%;

@@ -161,5 +161,21 @@ namespace easyGrading.Services
 
             return professorInfo;
         }
+        public IEnumerable<Course> GetAllCourses() 
+        {
+            var query =
+                $@"SELECT *
+                FROM dbo.course";
+            var courses = _dbContext.Course
+                .FromSqlRaw(query)
+                .ToList();
+
+            return courses;
+        }
+        public void AddedClassToStudent(Takes model) 
+        {
+            _dbContext.Add(model);
+            _dbContext.SaveChanges();
+        }
     }
 }

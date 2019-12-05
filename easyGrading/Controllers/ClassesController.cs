@@ -14,11 +14,25 @@ namespace EasyGrading.Controllers
         }
 
         [HttpGet]
-        [Route("ClassesView/{userId}")]
-        public IActionResult ClassesView(int userId) {
+        [Route("ClassesView")]
+        public IActionResult ClassesView() {
 
+            var userId = (int)TempData.Peek("UID");
             var model = _classesServices.GetClassInfo(userId);
             return View(model);
+        }
+
+        [HttpGet]
+        [Route("AddNewClassView")]
+        public IActionResult AddNewClassView() {
+            var model = _classesServices.GetAllClasses();
+            return View(model);
+        }
+
+        public IActionResult AddClassToUser(string course) {
+            var check = _classesServices.AddClassToStudent(course,(int)TempData.Peek("UID"));
+            
+            return RedirectToAction("ClassesView");
         }
 
     }
