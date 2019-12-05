@@ -741,6 +741,20 @@ namespace easyGrading.Services
             return course[0];
         }
 
+        public Course_Outline_Section GetCourseOutline(string Course_Id, string Part)
+        {
+            var query =
+                $@"SELECT *
+                    FROM dbo.course_outline_section c
+                    WHERE c.Course_Id = '{Course_Id}' AND c.Part = '{Part}'";
+
+            var course = _dbContext.Course_Outline_Section
+                .FromSqlRaw(query)
+                .ToList();
+
+            return course[0];
+        }
+
         public bool CheckCourseSectionPart(string Course_Id, string Part) 
         {
             var query =
@@ -938,6 +952,19 @@ namespace easyGrading.Services
             return grade;
         }
 
+        public Grade GetGrade2(int id)
+        {
+            var query =
+               $@"SELECT *
+                    FROM dbo.grade g
+                    WHERE g.Id={id} ";
+
+            var grade = _dbContext.Grade
+                .FromSqlRaw(query)
+                .ToList();
+            return grade[0];
+        }
+
         public IEnumerable<Grade> GetCourseGrade(string courseId) 
         {
             var query =
@@ -991,5 +1018,197 @@ namespace easyGrading.Services
         }
 
         #endregion
+
+        public void AddGrade(int Course_Outline_Id, string Course_Id)
+        {
+            var query =
+                $@"SELECT *
+                    FROM dbo.takes t
+                    WHERE t.Course_Id = '{Course_Id}'";
+
+            var takes = _dbContext.Takes
+                .FromSqlRaw(query)
+                .ToList();
+
+            for (int i = 0; i < takes.Count(); i++)
+            {
+                Grade g = new Grade();
+                g.Student_Id = takes[i].Student_Id;
+                g.Course_Id = takes[i].Course_Id;
+                g.Course_Outline_Id = Course_Outline_Id;
+                g.Editable = true;
+                _dbContext.Add(g);
+                _dbContext.SaveChanges();
+            }
+        }
+
+        public void GradeDelete(string Course_Id)
+        {
+            var query =
+               $@"SELECT *
+                    FROM dbo.grade g
+                    WHERE g.Course_Id='{Course_Id}'";
+
+            var grade = _dbContext.Grade
+                .FromSqlRaw(query)
+                .ToList();
+
+            for (int i = 0; i < grade.Count(); i++)
+            {
+
+                _dbContext.Remove(grade[i]);
+                _dbContext.SaveChanges();
+            }
+        }
+
+        public void DeleteGrade(int Course_Outline_Id)
+        {
+            var query =
+               $@"SELECT *
+                    FROM dbo.grade g
+                    WHERE g.Course_Outline_Id={Course_Outline_Id}";
+
+            var grade = _dbContext.Grade
+                .FromSqlRaw(query)
+                .ToList();
+
+            for (int i = 0; i < grade.Count(); i++)
+            {
+
+                _dbContext.Remove(grade[i]);
+                _dbContext.SaveChanges();
+            }
+        }
+
+        public Grade GetGrade(int Course_Outline_Id, int Student_Id)
+        {
+            var query =
+               $@"SELECT *
+                    FROM dbo.grade g
+                    WHERE g.Course_Outline_Id={Course_Outline_Id} AND g.Student_Id={Student_Id}";
+
+            var grade = _dbContext.Grade
+                .FromSqlRaw(query)
+                .ToList();
+            return grade[0];
+        }
+
+        public Student GetStudent(int id)
+        {
+            var query =
+                $@"SELECT *
+                    FROM dbo.student s
+                    WHERE s.Id = {id}";
+
+            var std = _dbContext.Student
+                .FromSqlRaw(query)
+                .ToList();
+            return std[0];
+        }
+
+        public IEnumerable<Grade> ReturnAllGrade(int Student_Id, string Course_Id)
+        {
+            var query =
+               $@"SELECT *
+                    FROM dbo.grade g
+                    WHERE g.Student_Id={Student_Id} AND g.Course_Id='{Course_Id}'";
+
+            var grade = _dbContext.Grade
+                .FromSqlRaw(query)
+                .ToList();
+            return grade;
+        }
+
+        public IEnumerable<Student> ReturnAllStudent(string Course_Id)
+        {
+            var query =
+                $@"SELECT *
+                    FROM dbo.takes t
+                    WHERE t.Course_Id = '{Course_Id}'";
+
+            var takes = _dbContext.Takes
+                .FromSqlRaw(query)
+                .ToList();
+            var model = new List<Student>();
+
+            for (int i = 0; i < takes.Count(); i++)
+            {
+                var query3 =
+                $@"SELECT *
+                    FROM dbo.student s
+                    WHERE s.Id = {takes[i].Student_Id}";
+
+                var std = _dbContext.Student
+                    .FromSqlRaw(query3)
+                    .ToList();
+                model = model.Concat(std).ToList();
+
+            }
+            return model;
+        }
+
+        public void TakesDelete(string Course_Id)
+        {
+            var query =
+               $@"SELECT *
+                    FROM dbo.takes t
+                    WHERE t.Course_Id='{Course_Id}'";
+
+            var takes = _dbContext.Takes
+                .FromSqlRaw(query)
+                .ToList();
+
+            for (int i = 0; i < takes.Count(); i++)
+            {
+
+                _dbContext.Remove(takes[i]);
+                _dbContext.SaveChanges();
+            }
+        }
+
+        public void TaUpdate(Ta model)
+        {
+            var query =
+                $@"UPDATE dbo.ta 
+                    SET Name='{model.Name}', Password='{model.Password}'
+                    WHERE Id = {model.Id}";
+            try
+            {
+                var ta = _dbContext.Ta
+                    .FromSqlRaw(query)
+                    .ToList();
+
+            }
+            catch { }
+
+        }
+
+        public void UpdateGrade(int id, int? Actual_Grade, bool Editable)
+        {
+            var query =
+                    $@"UPDATE dbo.grade
+                    SET Actual_Grade={Actual_Grade}, Editable='{Editable}'
+                    WHERE Id = {id}";
+            try
+            {
+                var g = _dbContext.Grade
+                        .FromSqlRaw(query)
+                        .ToList();
+            }
+            catch { }
+        }
+
+        public bool isTa(int id, string password)
+        {
+            var query =
+                $@"SELECT *
+                    FROM dbo.ta t
+                    WHERE t.Id = {id} AND t.Password='{password}'";
+
+            var ta = _dbContext.Ta
+                .FromSqlRaw(query)
+                .ToList();
+            return (ta.Count() != 0);
+        }
     }
 }

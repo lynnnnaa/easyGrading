@@ -52,6 +52,10 @@ namespace easyGrading.Controllers
                     {
                         return RedirectToAction("AdminPage", "Admin", new { Id = Convert.ToInt32(model.UserID) });
                     }
+                    if (_dbQueries.isTa(Convert.ToInt32(model.UserID), model.Password))
+                    {
+                        return RedirectToAction("TaPage", "Ta", new { Id = Convert.ToInt32(model.UserID) });
+                    }
                 }
             }
             model.Error = "accountError";

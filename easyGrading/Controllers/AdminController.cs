@@ -14,10 +14,12 @@ namespace easyGrading.Controllers
     {
         static int ID;
         static int workDep_Id;
+        static string Course_Id;
         static int ProfId;
         static string ProfName;
         private IDbQueries _dbQueries;
         static Course currentModel;
+        
 
         public AdminController(IDbQueries dbQueries)
         {
@@ -73,7 +75,7 @@ namespace easyGrading.Controllers
         public IActionResult AddCourse(Course model)
         {
             IEnumerable<Department> list = _dbQueries.returnAllDepartment();
-            ViewBag.DepartmentList = new SelectList(list, "Id", "Name");
+            ViewBag.DepartmentList = new SelectList(list, "Id", "Name",0);
 
             IEnumerable<Professor> list2 = _dbQueries.returnAllProfessor();
             ViewBag.ProfessorList = new SelectList(list2, "Id", "Name");
@@ -96,13 +98,16 @@ namespace easyGrading.Controllers
                     Course course = new Course();
                     course.Id = model.Id;
                     course.Name = model.Name;
+
+                        
                     course.Dep_Id = model.Dep_Id;
+                        
                     course.Prof_Id = model.Prof_Id;
                     course.Prof_Id2 = model.Prof_Id2;
 
                     _dbQueries.SaveCourse(course);
 
-                    TempData["SuccessMessage"] = "Course Added Successfully";
+                    return RedirectToAction("DepartmentCourse", "Admin", new { id = model.Dep_Id });
                 }
             }
             else
@@ -184,6 +189,7 @@ namespace easyGrading.Controllers
         [HttpGet]
         public IActionResult EditCourse(string id)
         {
+            Course_Id = id;
             Course model = _dbQueries.GetCourse(id);
             IEnumerable<Department> list = _dbQueries.returnAllDepartment();
             ViewBag.DepartmentList = new SelectList(list, "Id", "Name", model.Dep_Id);
@@ -198,6 +204,7 @@ namespace easyGrading.Controllers
         [HttpPost]
         public IActionResult EditCourse(Course model, string button)
         {
+            model.Id = Course_Id;
             if (button == "update")
             {
                 if (model.Name != null)
@@ -229,14 +236,14 @@ namespace easyGrading.Controllers
             }
             else
             {
-               // _dbQueries.GradeDelete(model.Id);
-               // _dbQueries.TakesDelete(model.Id);
+                _dbQueries.GradeDelete(model.Id);
+                _dbQueries.TakesDelete(model.Id);
                 _dbQueries.CourseOutlineDelete(model.Id);
 
                 _dbQueries.ReSignTa(model.Id);
                 _dbQueries.CourseDelete(model);
                 currentModel = model;
-                TempData["SuccessMessage"] = "course has been deleted Successfully";
+                return RedirectToAction("DepartmentCourse", "Admin", new { id = model.Dep_Id });
             }
 
             IEnumerable<Department> list = _dbQueries.returnAllDepartment();

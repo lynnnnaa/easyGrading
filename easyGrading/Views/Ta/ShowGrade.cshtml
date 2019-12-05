@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ShowGradeViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+    <div class="main">
+        <h2>Student Name: @ViewBag.Name</h2>
+        <h2>Student Id: @ViewBag.StudentId</h2>
+        <h2>@ViewBag.courseId Outline</h2>
+        <div class="list-group">
+            @foreach (var grade in Model)
+            {              
+                <a asp-action="EditGrade" asp-controller="Ta" asp-route-id=@grade.Id asp-route-name=@grade.Course_Outline_Part>
+                    <div class="list-group-item list-group-item-action">
+                        <small class="row ml-2">@grade.Course_Outline_Part-------->weight:  @grade.Percentage % -------> current grade: @grade.Actual_Grade</small>
+                    </div>
+
+                </a>
+            }
+        </div>
+    </div>
+
+<style>
+    .main {
+         margin-top: 100px;
+        margin-left: 200px; /* Same as the width of the sidenav */
+        font-size: 20px; /* Increased text to enable scrolling */
+        padding: 0px 10px;
+    }
+</style>

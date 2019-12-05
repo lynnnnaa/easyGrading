@@ -83,5 +83,19 @@ namespace easyGrading.Services.Interface
         public void DeleteTa(Ta model);
         public Ta GetTa(int id);
         public void UpdateTa(int id, string Name, int Prof_Id, string Course_Id);
+        public Course_Outline_Section GetCourseOutline(string Course_Id, string Part);
+        public void AddGrade(int Course_Outline_Id, string Course_Id);
+        public void DeleteGrade(int Course_Outline_Id);
+        public IEnumerable<Student> ReturnAllStudent(string Course_Id);
+        public IEnumerable<Grade> ReturnAllGrade(int Student_Id, string Course_Id);
+        public void TaUpdate(Ta model);
+        public Student GetStudent(int id);
+        public Grade GetGrade(int Course_Outline_Id, int Student_Id);
+        public void UpdateGrade(int id, int? Actual_Grade, bool Editable);
+        public void GradeDelete(string Course_Id);
+        public void TakesDelete(string Course_Id);
+        public bool isTa(int id, string password);
+
+        public Grade GetGrade2(int id);
     }
 }

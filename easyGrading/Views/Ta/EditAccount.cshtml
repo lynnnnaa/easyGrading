@@ -1,6 +1,6 @@
-﻿@model Professor
+﻿@model Ta
 @{
-    Layout = "~/Views/Shared/_Layout2.cshtml";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
 }
     <div class="main">
         @if (TempData["SuccessMessage"] != null)
@@ -13,7 +13,7 @@
             <h2>My Account</h2>
         </div>
 
-        <form method="post" asp-controller="Professor" asp-action="EditAccount">
+        <form method="post" asp-controller="Ta" asp-action="EditAccount">
             <h5 class="row ml-2 mt-1">
                 My Id number: @Model.Id
             </h5>

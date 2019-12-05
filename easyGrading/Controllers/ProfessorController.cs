@@ -57,7 +57,9 @@ namespace easyGrading.Controllers
         {
             if (button == "delete") 
             {
+                _dbQueries.DeleteGrade(SectionId);
                 _dbQueries.CourseOutlineDelete(_dbQueries.GetCourseOutline(SectionId));
+                
                 return RedirectToAction("ViewOutline", "Professor", new { id = CourseId });
             }
             var result = true;
@@ -127,6 +129,8 @@ namespace easyGrading.Controllers
                     outline.Part = model.Part;
                     outline.Percentage = model.Percentage;
                     _dbQueries.SaveCourseOutline(outline);
+                    var temp = _dbQueries.GetCourseOutline(CourseId, model.Part);
+                    _dbQueries.AddGrade(temp.Id, temp.Course_Id);
                     return RedirectToAction("ViewOutline", "Professor", new {id=CourseId });
                 }
             }
@@ -145,9 +149,14 @@ namespace easyGrading.Controllers
         [HttpPost]
         public IActionResult EditAccount(Professor model)
         {
-            model.Id = ID;
-            _dbQueries.ProfessorUpdate(model);
-            TempData["SuccessMessage"] = "Account has been updated Successfully";
+            if (model.Name != null && model.Password != null)
+            {
+                model.Id = ID;
+                _dbQueries.ProfessorUpdate(model);
+                TempData["SuccessMessage"] = "Account has been updated Successfully";
+            }
+            if (model.Name == null) { TempData["message2"] = "Name cannot be null"; }
+            if (model.Password == null) { TempData["message"] = "Password cannot be null"; }
             return View(model);
         }
 
