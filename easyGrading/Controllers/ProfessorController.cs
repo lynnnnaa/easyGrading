@@ -12,6 +12,7 @@ namespace easyGrading.Controllers
     public class ProfessorController : Controller
     {
         private IDbQueries _dbQueries;
+        static int Ta_Id;
         static int ID;
         static string CourseId;
         static int SectionId;
@@ -226,6 +227,7 @@ namespace easyGrading.Controllers
         [HttpGet]
         public IActionResult EditTa(int id)
         {
+            Ta_Id = id;
             Ta model = _dbQueries.GetTa(id);
             IEnumerable<Course> list = _dbQueries.returnAllProfessorCourse(ID);
             ViewBag.CourseList = new SelectList(list, "Id", "Name", model.Course_Id);
@@ -238,7 +240,7 @@ namespace easyGrading.Controllers
             if (button == "update") {
                 if (model.Name != null)
                 {
-                    _dbQueries.UpdateTa(model.Id, model.Name, ID, model.Course_Id);
+                    _dbQueries.UpdateTa(Ta_Id, model.Name, ID, model.Course_Id);
                     return RedirectToAction("ShowTa", "Professor");
 
                 }

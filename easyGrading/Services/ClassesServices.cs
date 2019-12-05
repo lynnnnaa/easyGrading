@@ -18,7 +18,7 @@ namespace easyGrading.Services
         public IEnumerable<ClassInfoViewModel> GetClassInfo(int studentId) 
         {
             var classes = new List<ClassInfoViewModel>();
-            try
+           try
             {
                 var studentTakesCourses = _dbQueries.GetStudentCourses(studentId);
 

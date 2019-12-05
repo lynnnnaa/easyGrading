@@ -25,6 +25,7 @@ namespace EasyGrading.Controllers
 
             model.CurrentGrade = _classesServices.GetCurrentGrade(courseId).ToString()+"%";
             model.TargetGrade = "100%";
+           // model.TargetGrade = ;
 
             //get all course ouline parts
             model.Components = new List<CourseComponentModel>();
