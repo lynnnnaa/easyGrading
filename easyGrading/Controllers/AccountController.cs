@@ -38,7 +38,7 @@ namespace easyGrading.Controllers
                 {
                     if (_accountServices.isUserStudent(id, model.Password))
                     {
-                        return RedirectToAction("MainScreenView", "MainScreen",new {userId = model.UserID} );
+                        return RedirectToAction("MainScreenView", "MainScreen", new { userId = model.UserID });
                     }
                     else if (_accountServices.isUserTa(id, model.Password))
                     {
@@ -48,13 +48,12 @@ namespace easyGrading.Controllers
                     {
                         return RedirectToAction("ProfPage", "Professor", new { Id = Convert.ToInt32(model.UserID) });
                     }
-                }
-                    else if (_accountServices.isUserAdmin(id, model.Password)) 
+                    else if (_accountServices.isUserAdmin(id, model.Password))
                     {
                         return RedirectToAction("AdminPage", "Admin", new { Id = Convert.ToInt32(model.UserID) });
                     }
                 }
-            
+            }
             model.Error = "accountError";
             return View(model);
         }

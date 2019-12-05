@@ -389,7 +389,7 @@ namespace easyGrading.Controllers
         public IActionResult EditWorkIn(int id)
         {
             Work_in work = _dbQueries.GetWorkIn(ProfId ,id);
-            workDep_Id = work.Dep_Id;            
+            workDep_Id = work.Dep_Id.Value;            
             IEnumerable<Department> list = _dbQueries.returnAllDepartment();
             ViewBag.DepartmentList = new SelectList(list, "Id", "Name", work.Dep_Id);
             ViewBag.ProfName =ProfName;
@@ -405,10 +405,10 @@ namespace easyGrading.Controllers
                 _dbQueries.ReSignTaProf_Id(ProfId);
                 return RedirectToAction("EditProfessor", "Admin", new { id = ProfId });
             }
-            var result = _dbQueries.CheckWorkIn(ProfId, model.Dep_Id);
+            var result = _dbQueries.CheckWorkIn(ProfId, model.Dep_Id.Value);
             if (!result)
             {
-                _dbQueries.WorkInUpdate(ProfId, workDep_Id, model.Dep_Id);
+                _dbQueries.WorkInUpdate(ProfId, workDep_Id, model.Dep_Id.Value);
                 return RedirectToAction("EditProfessor", "Admin", new { id = ProfId });
             }
 
@@ -448,7 +448,7 @@ namespace easyGrading.Controllers
         {
             if (model.Dep_Id >= 0) 
             {
-                var result = _dbQueries.CheckWorkIn(ProfId, model.Dep_Id);
+                var result = _dbQueries.CheckWorkIn(ProfId, model.Dep_Id.Value);
                 if (!result) {
                     Work_in work = new Work_in();
                     work.Prof_Id = ProfId;

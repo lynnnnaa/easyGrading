@@ -11,12 +11,13 @@ namespace easyGrading.Services
 {
     public class DbQueries: IDbQueries
     {
+        
         private EasyGradingContext _dbContext;
         public DbQueries(EasyGradingContext dbContext)
         {
             _dbContext = dbContext;
         }
-
+        #region Student
         public IEnumerable<Student> returnStudentInfoWithUserID(int userID) {
             
             var query = 
@@ -909,7 +910,7 @@ namespace easyGrading.Services
             return taInfo;
         }
 
-        public IEnumerable<Course_outline_section> GetCourse_Outline_Sections(string courseId)      
+        public IEnumerable<Course_Outline_Section> GetCourse_Outline_Sections(string courseId)      
         {
             var query =
                     $@"SELECT *
@@ -951,7 +952,7 @@ namespace easyGrading.Services
             return grade;
         }
 
-        public Course_outline_section GetCourse_Outline(int courseOutlineId) 
+        public Course_Outline_Section GetCourse_Outline(int courseOutlineId) 
         {
             var query =
                        $@"SELECT *
@@ -960,10 +961,9 @@ namespace easyGrading.Services
 
             var components = _dbContext.Course_Outline_Section
                 .FromSqlRaw(query)
-                .ToList().FirstOrDefault<Course_outline_section>();
+                .ToList().FirstOrDefault<Course_Outline_Section>();
 
             return components;
-        }
         }
 
         public void CourseOutlineDelete(Course_Outline_Section model)
